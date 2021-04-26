@@ -1,8 +1,9 @@
-import { Component } from 'react';
-import './App.css';
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import CreatureItem from './CreatureItem';
+import creatures from './creatures';
+import './App.css';
 
 class App extends Component {
 
@@ -12,7 +13,9 @@ class App extends Component {
 
         <Header />
 
-        <main></main>
+        <main>
+          <CreatureItem creatures={creatures} />
+        </main>
 
         <Footer />
 
