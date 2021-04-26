@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import './Header.css';
 
 class Header extends Component {
-  
+
   render() { 
     return (
       <header className="Header">
-        <h1>Header</h1>
+        <h1>Featured Creatures!</h1>
       </header>
     );
   }
