@@ -3,16 +3,36 @@ import Header from './Header';
 import Footer from './Footer';
 import CreatureList from './CreatureList';
 import CreatureSearch from './CreatureSearch';
-import creatures from './creatures';
+import creatureData from './creatures';
 import './App.css';
 
 class App extends Component {
 
-  handleSearch = (search) => {
-    console.log(search);
+  state = {
+    creatures: creatureData
+  }
+
+  handleSearch = ({ nameFilter, sortField }) => {
+
+    const nameRegex = new RegExp(nameFilter, 'i');
+
+    const searchedData = creatureData
+      .filter(creature => {
+        return !nameFilter || creature.title.match(nameRegex);
+      })
+      .sort((a, b) => {
+        if (a[sortField] < b[sortField]) return -1;
+        if (a[sortField] > b[sortField]) return 1;
+        return 0;
+      });
+
+    this.setState({ creatures: searchedData });
   }
 
   render() {
+
+    const { creatures } = this.state;
+
     return (
       <div className="App">
 

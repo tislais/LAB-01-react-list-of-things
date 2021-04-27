@@ -3,16 +3,22 @@ import './CreatureSearch.css';
 
 export default class CreatureSearch extends Component {
     state = {
-      nameSearch: '',
+      nameFilter: '',
       sortField: ''
     }
 
     handleNameChange = ({ target }) => {
-      this.setState({ nameSearch: target.value });
+      this.setState({ nameFilter: target.value });
     }
 
-    handleSortField = ({ target }) => {
+    handleSearchChange = ({ target }) => {
       this.setState({ sortField: target.value });
+    }
+
+    componentDidUpdate(prevProp, prevState) {
+      if (prevState !== this.state) {
+        this.props.onSearch(this.state);
+      }
     }
 
     handleSubmit = (e) => {
@@ -22,24 +28,26 @@ export default class CreatureSearch extends Component {
     }
   
     render() {
-      const { nameSearch, sortField } = this.state;
+
+      const { nameFilter, sortField } = this.state;
+
       return (
         <form className="CreatureSearch" onSubmit={this.handleSubmit}>
 
           <input 
-            name="nameSearch"
-            value={nameSearch}
+            name="nameFilter"
+            value={nameFilter}
             onChange={this.handleNameChange}
           />
 
           <select
             name="sortField"
             value={sortField}  
-            onChange={this.handleSortField}
+            onChange={this.handleSearchChange}
           >
-            <option value="">Sort...</option>
-            <option value="name">By Name</option>
-            <option value="lives">By Lives</option>
+            <option value="">All</option>
+            <option value="title">By Title</option>
+            <option value="horns">By Horns</option>
           </select>
         
           <button>🔎</button>
