@@ -3,20 +3,33 @@ import Header from './Header';
 import Footer from './Footer';
 import CreatureList from './CreatureList';
 import CreatureSearch from './CreatureSearch';
-import creatureData from './creatures';
+//import creatureData from './creatures';
+import request from 'superagent';
 import './App.css';
+
+const CREATURES_API = 'https://lab-06-heroku-repo.herokuapp.com/api/creatures';
 
 class App extends Component {
 
   state = {
-    creatures: creatureData
+    creatures: []
+  }
+
+  async fetchCreature() {
+    const response = await request
+      .get(CREATURES_API);
+    this.setState({ creatures: response.body });
+  }
+
+  async componentDidMount() {
+    this.fetchCreature();
   }
 
   handleSearch = ({ nameFilter, sortField }) => {
 
     const nameRegex = new RegExp(nameFilter, 'i');
 
-    const searchedData = creatureData
+    const searchedData = this.state.creatures
       .filter(creature => {
         return !nameFilter || creature.title.match(nameRegex);
       })
